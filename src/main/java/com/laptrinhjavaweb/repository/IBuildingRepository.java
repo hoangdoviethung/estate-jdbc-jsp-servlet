@@ -1,7 +1,14 @@
 package com.laptrinhjavaweb.repository;
 
+import java.util.List;
+
+import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.paging.Pageble;
 
 public interface IBuildingRepository  extends GenericJDBC<BuildingEntity>{
-	//Long insert(BuildingEntity buildingEntity);
+	 Long insert(BuildingEntity buildingEntity);
+	 List<BuildingEntity> findAll(BuildingSearchBuilder builder,Pageble page);
+		 
+	 
 }

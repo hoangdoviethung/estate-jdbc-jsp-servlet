@@ -1,8 +1,6 @@
 package com.laptrinhjavaweb.dto;
 
-public class BuildingDTO extends AbstractDTO<BuildingDTO>  {
-
-
+public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 
 	private String name;
 
@@ -43,7 +41,69 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO>  {
 	private String timeContract;
 	private String type;
 
-	private String[] buildingTypes = new String[]{};
+	private String direction;
+	private String level;
+
+	private Integer costRentTo;
+
+	private Integer costRentFrom;
+
+	private Integer areaRentTo;
+
+	private Integer areaRentFrom;
+
+	
+	private String[] buildingTypes = new String[] {};
+	
+	public Integer getAreaRentTo() {
+		return areaRentTo;
+	}
+
+	public void setAreaRentTo(Integer areaRentTo) {
+		this.areaRentTo = areaRentTo;
+	}
+
+	public Integer getAreaRentFrom() {
+		return areaRentFrom;
+	}
+
+	public void setAreaRentFrom(Integer areaRentFrom) {
+		this.areaRentFrom = areaRentFrom;
+	}
+
+	public Integer getCostRentTo() {
+		return costRentTo;
+	}
+
+	public void setCostRentTo(Integer costRentTo) {
+		this.costRentTo = costRentTo;
+	}
+
+	public Integer getCostRentFrom() {
+		return costRentFrom;
+	}
+
+	public void setCostRentFrom(Integer costRentFrom) {
+		this.costRentFrom = costRentFrom;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	
 
 	public String getTimeContract() {
 		return timeContract;
@@ -221,6 +281,4 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO>  {
 		this.buildingTypes = buildingTypes;
 	}
 
-
-	
 }

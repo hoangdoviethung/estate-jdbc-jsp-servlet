@@ -5,7 +5,7 @@ import com.laptrinhjavaweb.annotation.Entity;
 import com.laptrinhjavaweb.annotation.Table;
 
 @Entity
-@Table(name="building")
+@Table(name = "building")
 public class BuildingEntity extends BaseEntity {
 
 	@Column(name = "name")
@@ -68,8 +68,15 @@ public class BuildingEntity extends BaseEntity {
 	@Column(name = "type")
 	private String type;
 
-	@Column(name="timecontract")
+	@Column(name = "timecontract")
 	private String timeContract;
+
+	@Column(name = "direction")
+	private String direction;
+
+	@Column(name = "level")
+	private String level;
+
 	public String getName() {
 		return name;
 	}
@@ -229,5 +236,31 @@ public class BuildingEntity extends BaseEntity {
 	public void setCostRent(Integer costRent) {
 		this.costRent = costRent;
 	}
+
+	public String getTimeContract() {
+		return timeContract;
+	}
+
+	public void setTimeContract(String timeContract) {
+		this.timeContract = timeContract;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	
+	
 
 }

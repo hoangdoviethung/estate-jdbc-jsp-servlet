@@ -6,7 +6,7 @@ import java.util.Map;
 import com.laptrinhjavaweb.paging.Pageble;
 
 public interface GenericJDBC<T> {
-	 List<T> query(String sql, Object... parameters);
+	 public List<T> query(String sql, Object... parameters);
 	 void update(String sql, Object... parameters);
 	 Long insert(String sql, Object... parameters);
 	 

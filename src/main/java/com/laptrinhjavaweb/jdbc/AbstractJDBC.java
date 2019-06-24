@@ -11,9 +11,7 @@ import com.laptrinhjavaweb.mapper.ResultSetMapper;
 
 public class AbstractJDBC<T> {
 
-	
-	
-	public  List<T> query(String sql, Class<T> zClass, Object... parameters) {
+	public List<T> query(String sql, Class<T> zClass, Object... parameters) {
 
 		ResultSetMapper<T> resultSetMapper = new ResultSetMapper<>();
 		Connection conn = getConnection();
@@ -22,8 +20,8 @@ public class AbstractJDBC<T> {
 		try {
 			statement = conn.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			if (conn != null) {		
-					return resultSetMapper.mapRow(resultSet, zClass);	
+			if (conn != null) {
+				return resultSetMapper.mapRow(resultSet, zClass);
 			}
 
 		} catch (SQLException e) {
@@ -126,9 +124,9 @@ public class AbstractJDBC<T> {
 				if (rowInserted > 0) {
 					while (resultSet.next()) {
 						id = resultSet.getLong(1);
-						
+
 					}
-					
+
 				}
 				return id;
 			}
