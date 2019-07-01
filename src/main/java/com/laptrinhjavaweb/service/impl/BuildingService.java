@@ -1,8 +1,8 @@
 package com.laptrinhjavaweb.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
@@ -15,41 +15,46 @@ import com.laptrinhjavaweb.service.IBuildingService;
 
 public class BuildingService implements IBuildingService {
 
-	private static IBuildingRepository buildingRepository;
-	private static BuildingConverter buildingConverter;
+	private IBuildingRepository buildingRepository;
 
-	public static IBuildingRepository getBuildingRepository() {
+	private BuildingConverter buildingConverter;
+
+	private IBuildingRepository buildingRepository() {
 		if (buildingRepository == null) {
 			buildingRepository = new BuildingRepository();
 		}
-		return  buildingRepository;
+		return buildingRepository;
 	}
 
-	public static BuildingConverter getBuildingConverter() {
+	private BuildingConverter buildingConverter() {
 		if (buildingConverter == null) {
 			buildingConverter = new BuildingConverter();
 		}
 		return buildingConverter;
-	}
 
-	
+	}
 
 	@Override
 	public List<BuildingDTO> findAll(BuildingSearchBuilder builder, Pageble pageble) {
-		
-		List<BuildingEntity> buildingEntities = getBuildingRepository().findAll(builder, pageble);
-		List<BuildingDTO> result = buildingEntities.stream().map(item -> getBuildingConverter().converterToDTO(item))
-				.collect(Collectors.toList());
+		List<BuildingDTO> result = new ArrayList<>();
+		buildingRepository = new BuildingRepository();
+		buildingConverter = new BuildingConverter();
+		List<BuildingEntity> buildingEntities = buildingRepository.findAll(builder, pageble);
+
+		for (BuildingEntity item : buildingEntities) {
+			result.add(buildingConverter.converterToDTO(item));
+		}
 
 		return result;
 	}
 
 	@Override
 	public BuildingDTO save(BuildingDTO buildingDTO) {
-
-		BuildingEntity buildingEntity = getBuildingConverter().converterToEntity(buildingDTO);
+		buildingRepository = new BuildingRepository();
+		buildingConverter = new BuildingConverter();
+		BuildingEntity buildingEntity = buildingConverter().converterToEntity(buildingDTO);
 		buildingEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		Long id = getBuildingRepository().insert(buildingEntity);
+		Long id = buildingRepository().insert(buildingEntity);
 
 		return null;
 	}

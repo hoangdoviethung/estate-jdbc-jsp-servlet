@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.controller.admin;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,14 +15,15 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.paging.PageRequest;
 import com.laptrinhjavaweb.paging.Pageble;
 import com.laptrinhjavaweb.service.IBuildingService;
-import com.laptrinhjavaweb.service.impl.BuildingService;
+import com.laptrinhjavaweb.utils.DataUtil;
 import com.laptrinhjavaweb.utils.FormUtil;
 
 @WebServlet(urlPatterns = { "/admin-building" })
 public class BuildingController extends HttpServlet {
 	private static final long serialVersionUID = 2686801510247002166L;
 
-	private static IBuildingService buildingService;
+	@Inject
+	private  IBuildingService buildingService;
 
 	// public static IBuildingService getBuildingService() {
 	// if (buildingService == null) {
@@ -30,11 +32,11 @@ public class BuildingController extends HttpServlet {
 	// return buildingService;
 	// }
 
-	public BuildingController() {
-		if (buildingService == null) {
-			buildingService = new BuildingService();
-		}
-	}
+//	public BuildingController() {
+//		if (buildingService == null) {
+//			buildingService = new BuildingService();
+//		}
+//	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -46,15 +48,13 @@ public class BuildingController extends HttpServlet {
 			url = "/views/building/list.jsp";
 			BuildingSearchBuilder builder = initBuildingBuilder(model);
 			Pageble pageble = new PageRequest(null, null, null);
-			request.setAttribute("buildings", buildingService.findAll(builder, pageble));
-			// model.setListResults(listResults);
-
+			model.setListResults( buildingService.findAll(builder, pageble));
 		} else if (action.equals("EDIT")) {
 			url = "/views/building/edit.jsp";
 		}
-
+		request.setAttribute("districs", DataUtil.getDistrics());
+		request.setAttribute("buidingTypes", DataUtil.getBuildingTypes());
 		request.setAttribute("model", model);
-
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
@@ -63,7 +63,10 @@ public class BuildingController extends HttpServlet {
 		BuildingSearchBuilder build = new BuildingSearchBuilder.Builder().setAreaRentFrom(model.getAreaRentFrom())
 				.setAreaRentTo(model.getAreaRentTo()).setName(model.getName()).setCostRentFrom(model.getCostRentFrom())
 				.setCostRentTo(model.getCostRentTo()).setNumberOfBasement(model.getNumberOfBasement())
-				.setStreet(model.getStreet()).setWard(model.getWard()).build();
+				.setStreet(model.getStreet())
+				.setWard(model.getWard())
+				.setBuildingTypes(model.getBuildingTypes())
+				.build();
 
 		return build;
 	}

@@ -35,56 +35,67 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 
 	private String timeDecorate;
 
-	private String manageName;
+	private String managerName;
 
-	private String managePhone;
+	private String managerPhone;
+
 	private String timeContract;
 	private String type;
 
 	private String direction;
 	private String level;
 
-	private Integer costRentTo;
+	private String costRentTo;
 
-	private Integer costRentFrom;
+	private String costRentFrom;
 
-	private Integer areaRentTo;
+	private String areaRentTo;
 
-	private Integer areaRentFrom;
+	private String areaRentFrom;
 
-	
+	private String address;
+
+	private String rentArea;
+
 	private String[] buildingTypes = new String[] {};
+
 	
-	public Integer getAreaRentTo() {
-		return areaRentTo;
-	}
+	
 
-	public void setAreaRentTo(Integer areaRentTo) {
-		this.areaRentTo = areaRentTo;
-	}
+	
 
-	public Integer getAreaRentFrom() {
-		return areaRentFrom;
-	}
+	
 
-	public void setAreaRentFrom(Integer areaRentFrom) {
-		this.areaRentFrom = areaRentFrom;
-	}
-
-	public Integer getCostRentTo() {
+	public String getCostRentTo() {
 		return costRentTo;
 	}
 
-	public void setCostRentTo(Integer costRentTo) {
+	public void setCostRentTo(String costRentTo) {
 		this.costRentTo = costRentTo;
 	}
 
-	public Integer getCostRentFrom() {
+	public String getCostRentFrom() {
 		return costRentFrom;
 	}
 
-	public void setCostRentFrom(Integer costRentFrom) {
+	public void setCostRentFrom(String costRentFrom) {
 		this.costRentFrom = costRentFrom;
+	}
+
+	public String getAreaRentTo() {
+		return areaRentTo;
+	}
+
+	public void setAreaRentTo(String areaRentTo) {
+		this.areaRentTo = areaRentTo;
+	}
+
+	public String getAreaRentFrom() {
+		return areaRentFrom;
+	}
+
+	public void setAreaRentFrom(String areaRentFrom) {
+		this.areaRentFrom = areaRentFrom;
 	}
 
 	public String getDirection() {
@@ -102,8 +113,6 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setLevel(String level) {
 		this.level = level;
 	}
-
-	
 
 	public String getTimeContract() {
 		return timeContract;
@@ -249,21 +258,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 		this.timeDecorate = timeDecorate;
 	}
 
-	public String getManageName() {
-		return manageName;
-	}
 
-	public void setManageName(String manageName) {
-		this.manageName = manageName;
-	}
-
-	public String getManagePhone() {
-		return managePhone;
-	}
-
-	public void setManagePhone(String managePhone) {
-		this.managePhone = managePhone;
-	}
 
 	public String getType() {
 		return type;
@@ -281,4 +276,38 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 		this.buildingTypes = buildingTypes;
 	}
 
+	public String getAddress() {
+		return this.street+ " , " +  this.ward ;
+	}
+
+	public String getRentArea() {
+		return rentArea;
+	}
+
+	public void setRentArea(String rentArea) {
+		this.rentArea = rentArea;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerPhone() {
+		return managerPhone;
+	}
+
+	public void setManagerPhone(String managerPhone) {
+		this.managerPhone = managerPhone;
+	}
+
+	
+	
 }

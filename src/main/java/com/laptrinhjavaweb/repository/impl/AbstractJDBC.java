@@ -507,10 +507,14 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 			}
 			// luu y 
 			for(int i1=0;i1 < params.length;i1++){
+				
 				if(values[i1] instanceof String){
-					result.append(" and LOWER("+params[i1]+") LIKE '%"+values[i1]+"%' ");
-				}else if (values[i1] instanceof Integer){
-					result.append(" and "+params[i]+" = "+values[i]+" ");
+					result.append(" and LOWER("+params[i1]+" LIKE '%"+values[i1]+"%' )");
+				}else if (values[i1] instanceof Integer ){
+					if((Integer)values[i1] != 0){
+					result.append(" and "+params[i1]+" = "+values[i1]+" ");}
+				}else if (values[i1] instanceof Long){
+					result.append(" and "+params[i1]+" = "+values[i1]+" ");
 				}
 				
 			}

@@ -10,13 +10,13 @@ public class BuildingSearchBuilder {
 	
 	private Integer numberOfBasement;
 	
-	private Integer costRentTo;
+	private String costRentTo;
 
-	private Integer costRentFrom;
+	private String costRentFrom;
 
-	private Integer areaRentTo;
+	private String areaRentTo;
 
-	private Integer areaRentFrom;
+	private String areaRentFrom;
 
 	private String[] buildingTypes = new String[] {};
 
@@ -37,19 +37,19 @@ public class BuildingSearchBuilder {
 		return numberOfBasement;
 	}
 
-	public Integer getCostRentTo() {
+	public String getCostRentTo() {
 		return costRentTo;
 	}
 
-	public Integer getCostRentFrom() {
+	public String getCostRentFrom() {
 		return costRentFrom;
 	}
 
-	public Integer getAreaRentTo() {
+	public String getAreaRentTo() {
 		return areaRentTo;
 	}
 
-	public Integer getAreaRentFrom() {
+	public String getAreaRentFrom() {
 		return areaRentFrom;
 	}
 
@@ -74,10 +74,10 @@ public class BuildingSearchBuilder {
 		private String ward;
 		private String street;
 		private Integer numberOfBasement;	
-		private Integer costRentTo;
-		private Integer costRentFrom;
-		private Integer areaRentTo;
-		private Integer areaRentFrom;
+		private String costRentTo;
+		private String costRentFrom;
+		private String areaRentTo;
+		private String areaRentFrom;
 		private String[] buildingTypes = new String[] {};
 
 		public Builder setName(String name) {
@@ -102,22 +102,22 @@ public class BuildingSearchBuilder {
 			return this;
 		}
 
-		public Builder setCostRentTo(Integer costRentTo) {
+		public Builder setCostRentTo(String costRentTo) {
 			this.costRentTo = costRentTo;
 			return this;
 		}
 
-		public Builder setCostRentFrom(Integer costRentFrom) {
+		public Builder setCostRentFrom(String costRentFrom) {
 			this.costRentFrom = costRentFrom;
 			return this;
 		}
 
-		public Builder setAreaRentTo(Integer areaRentTo) {
+		public Builder setAreaRentTo(String areaRentTo) {
 			this.areaRentTo = areaRentTo;
 			return this;
 		}
 
-		public Builder setAreaRentFrom(Integer areaRentFrom) {
+		public Builder setAreaRentFrom(String areaRentFrom) {
 			this.areaRentFrom = areaRentFrom;
 			return this;
 		}

@@ -58,10 +58,9 @@
 												<label>Quận hiện có</label>
 												<div class="fg-line">
 													<select class="custom-select" id="sel1" name="district">
-														<option value="QUAN_1">Quận 1</option>
-														<option value="QUAN_2">Quận 2</option>
-														<option value="QUAN_3">Quận 3</option>
-														<option value="QUAN_4">Quận 4</option>
+														<c:forEach var="item" items="${districs}">
+															<option value="${item.key}">${item.value}</option>
+														</c:forEach>
 													</select>
 												</div>
 											</div>
@@ -99,7 +98,7 @@
 											<div class="col-sm-4">
 												<label>Hạng</label>
 												<div class="fg-line">
-													<input type="text" class="form-control input-sm"
+													<input type="number" class="form-control input-sm"
 														name="level" value="${model.level}" />
 												</div>
 											</div>
@@ -109,28 +108,28 @@
 											<div class="col-sm-3">
 												<label>Diện tích từ</label>
 												<div class="fg-line">
-													<input type="text" class="form-control input-sm"
-														name="areaRentTo" value="${model.areaRentTo}" />
+													<input type="" number"" class="form-control input-sm"
+														name="areaRentFrom" value="${model.areaRentFrom}" />
 												</div>
 											</div>
 											<div class="col-sm-3">
 												<label>Diện tích đến</label>
 												<div class="fg-line">
-													<input type="text" class="form-control input-sm"
-														name="areaRentFrom" value="${model.areaRentFrom}" />
+													<input type="" number"" class="form-control input-sm"
+														name="areaRentTo" value="${model.areaRentTo}" />
 												</div>
 											</div>
 											<div class="col-sm-3">
 												<label>Giá thuê từ</label>
 												<div class="fg-line">
-													<input type="text" class="form-control input-sm"
+													<input type="" number"" class="form-control input-sm"
 														name="costRentFrom" value="${model.costRentFrom}" />
 												</div>
 											</div>
 											<div class="col-sm-3">
 												<label>Giá thuê đến</label>
 												<div class="fg-line">
-													<input type="text" class="form-control input-sm"
+													<input type="number" class="form-control input-sm"
 														name="costRentTo" value="${model.costRentTo}" />
 												</div>
 											</div>
@@ -142,14 +141,14 @@
 												<label>Tên quản lý</label>
 												<div class="fg-line">
 													<input type="text" class="form-control input-sm"
-														name="manageName" value="${model.manageName}" />
+														name="manageName" value="${model.managerName}" />
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<label>Điện thoại quản lý</label>
 												<div class="fg-line">
 													<input type="text" class="form-control input-sm"
-														name="managePhone" value="${model.managePhone}" />
+														name="managePhone" value="${model.managerPhone}" />
 												</div>
 											</div>
 
@@ -171,27 +170,25 @@
 											<div class="col-sm-12">
 												<label>Loại tòa nhà</label>
 												<div class="fg-line">
-													<label class="checkbox-inline"><input
-														type="checkbox" value="TANG_TRET" name="buildingTypes">Tầng
-														trệt</label> <label class="checkbox-inline"><input
-														type="checkbox" value="NGUYEN_CAN" name="buildingTypes">Nguyên
-														căn</label> <label class="checkbox-inline"><input
-														type="checkbox" value="NOI_THAT" name="buildingTypes">Nội
-														thất</label>
+													<c:forEach var="item" items="${buidingTypes}">
+														<label class="checkbox-inline"><input
+															type="checkbox" value="${item.key}" name="buildingTypes">${item.value}</label>
+													</c:forEach>
+
 												</div>
 											</div>
 
 										</div>
 
 										<input type="hidden" name="action" value="LIST" />
-										
-											<div class="form-group">
-												<div>
-													<button type="submit" class="btn btn-sm btn-success">
-														Tìm kiếm</button>
-												</div>
+
+										<div class="form-group">
+											<div>
+												<button type="submit" class="btn btn-sm btn-success">
+													Tìm kiếm</button>
 											</div>
-										
+										</div>
+
 									</div>
 
 								</div>
@@ -230,17 +227,25 @@
 							<tr>
 								<th>Tên sản phẩm</th>
 								<th>Địa chỉ</th>
-								<th>Quản lý</th>
+								<th>Giá thuê</th>
+								<th>Diện tích thuê</th>
+								<th>Loại tòa nhà</th>
+								<th>Tên quản lý</th>
 								<th>SDT quản lý</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>John</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>Mary</td>
-							</tr>
+							<c:forEach var="item" items="${model.listResults}">
+								<tr>
+									<td>${item.name}</td>
+									<td>${item.address}</td>
+									<td>${item.costRent}</td>
+									<td>${item.rentArea}</td>
+									<td>${item.type}</td>
+									<td>${item.managerName}</td>
+									<td>${item.managerPhone}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

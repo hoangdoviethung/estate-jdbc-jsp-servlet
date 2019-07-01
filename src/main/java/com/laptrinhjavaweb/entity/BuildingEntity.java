@@ -59,11 +59,11 @@ public class BuildingEntity extends BaseEntity {
 	@Column(name = "timedecorate")
 	private String timeDecorate;
 
-	@Column(name = "managename")
-	private String manageName;
+	@Column(name = "managername")
+	private String managerName;
 
-	@Column(name = "managephone")
-	private String managePhone;
+	@Column(name = "managerphone")
+	private String managerPhone;
 
 	@Column(name = "type")
 	private String type;
@@ -205,22 +205,7 @@ public class BuildingEntity extends BaseEntity {
 		this.timeDecorate = timeDecorate;
 	}
 
-	public String getManageName() {
-		return manageName;
-	}
-
-	public void setManageName(String manageName) {
-		this.manageName = manageName;
-	}
-
-	public String getManagePhone() {
-		return managePhone;
-	}
-
-	public void setManagePhone(String managePhone) {
-		this.managePhone = managePhone;
-	}
-
+	
 	public String getType() {
 		return type;
 	}
@@ -259,6 +244,22 @@ public class BuildingEntity extends BaseEntity {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerPhone() {
+		return managerPhone;
+	}
+
+	public void setManagerPhone(String managerPhone) {
+		this.managerPhone = managerPhone;
 	}
 	
 	

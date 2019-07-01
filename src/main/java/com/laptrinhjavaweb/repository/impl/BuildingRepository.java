@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.paging.Pageble;
@@ -20,11 +22,11 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 	@Override
 	public List<BuildingEntity> findAll(BuildingSearchBuilder builder, Pageble pageble) {
 		StringBuilder whereClause = new StringBuilder();
-		if (builder.getCostRentFrom() != null) {
-			whereClause.append(" AND costrend >= " + builder.getCostRentFrom() + "");
+		if (StringUtils.isNotBlank(builder.getCostRentFrom())) {
+			whereClause.append(" AND costrent >= " + builder.getCostRentFrom() + "");
 		}
-		if (builder.getCostRentTo() != null) {
-			whereClause.append(" AND costrend <= " + builder.getCostRentTo() + "");
+		if (StringUtils.isNotBlank(builder.getCostRentTo() )) {
+			whereClause.append(" AND costrent <= " + builder.getCostRentTo() + "");
 		}
 
 		// select * from building A where
@@ -32,7 +34,7 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 		// exists(select * from rentarea ra where (ra.buildingid = A.id AND
 		// ra.value >= '300' AND ra.value <='700')) ;
 
-		if (builder.getAreaRentFrom() != null || builder.getAreaRentTo() != null) {
+		if (StringUtils.isNotBlank(builder.getAreaRentFrom())  || StringUtils.isNotBlank(builder.getAreaRentTo())) {
 			whereClause.append(" AND EXISTS (SELECT * FROM rentarea ra WHERE (ra.buildingid = A.id");
 			if (builder.getAreaRentFrom() != null) {
 				whereClause.append(" AND ra.value >= '" + builder.getAreaRentFrom() + "'");
