@@ -29,6 +29,9 @@ public class BuildingEntity extends BaseEntity {
 	@Column(name = "costrent")
 	private Integer costRent;
 
+	@Column(name="district")
+	private String district;
+	
 	@Column(name = "costdescription")
 	private String costDescription;
 
@@ -260,6 +263,14 @@ public class BuildingEntity extends BaseEntity {
 
 	public void setManagerPhone(String managerPhone) {
 		this.managerPhone = managerPhone;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 	
 	

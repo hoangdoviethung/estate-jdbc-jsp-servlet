@@ -8,16 +8,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.paging.Pageble;
 import com.laptrinhjavaweb.repository.IBuildingRepository;
 
 public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements IBuildingRepository {
 
-	@Override
-	public Long insert(BuildingEntity buildingEntity) {
-		return null;
-	}
+	
 
 	@Override
 	public List<BuildingEntity> findAll(BuildingSearchBuilder builder, Pageble pageble) {
@@ -25,7 +23,7 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 		if (StringUtils.isNotBlank(builder.getCostRentFrom())) {
 			whereClause.append(" AND costrent >= " + builder.getCostRentFrom() + "");
 		}
-		if (StringUtils.isNotBlank(builder.getCostRentTo() )) {
+		if (StringUtils.isNotBlank(builder.getCostRentTo())) {
 			whereClause.append(" AND costrent <= " + builder.getCostRentTo() + "");
 		}
 
@@ -34,27 +32,27 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 		// exists(select * from rentarea ra where (ra.buildingid = A.id AND
 		// ra.value >= '300' AND ra.value <='700')) ;
 
-		if (StringUtils.isNotBlank(builder.getAreaRentFrom())  || StringUtils.isNotBlank(builder.getAreaRentTo())) {
+		if (StringUtils.isNotBlank(builder.getAreaRentFrom()) || StringUtils.isNotBlank(builder.getAreaRentTo())) {
 			whereClause.append(" AND EXISTS (SELECT * FROM rentarea ra WHERE (ra.buildingid = A.id");
 			if (builder.getAreaRentFrom() != null) {
 				whereClause.append(" AND ra.value >= '" + builder.getAreaRentFrom() + "'");
 			}
-			if(builder.getAreaRentTo() != null){
-				whereClause.append("  AND ra.value <='"+builder.getAreaRentTo()+"'");
+			if (builder.getAreaRentTo() != null) {
+				whereClause.append("  AND ra.value <='" + builder.getAreaRentTo() + "'");
 			}
 			whereClause.append("))");
 		}
-		
-		if(builder.getBuildingTypes().length>0){
-			whereClause.append(" AND (A.type LIKE '%"+builder.getBuildingTypes()[0]+"%'");
-			for(String type: builder.getBuildingTypes()){
-				if(!type.equals(builder.getBuildingTypes()[0])){
-					whereClause.append(" OR A.type LIKE '%"+type+"%'");
+
+		if (builder.getBuildingTypes().length > 0) {
+			whereClause.append(" AND (A.type LIKE '%" + builder.getBuildingTypes()[0] + "%'");
+			for (String type : builder.getBuildingTypes()) {
+				if (!type.equals(builder.getBuildingTypes()[0])) {
+					whereClause.append(" OR A.type LIKE '%" + type + "%'");
 				}
 			}
 			whereClause.append(")");
 		}
-		
+
 		Map<String, Object> properties = buildMapSearch(builder);
 		return findAll(properties, pageble, whereClause.toString());
 	}
@@ -68,9 +66,13 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 				field.setAccessible(true);
 				try {
 					if (field.getName() != null) {
+						if(field.getName().equals("buildingArea")||field.getName().equals("numberOfBasement")){
+							result.put(field.getName().toLowerCase(), Integer.parseInt((String) field.get(builder)));
+						}
+						else{
 						result.put(field.getName().toLowerCase(), field.get(builder));
 					}
-
+					}
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -78,4 +80,6 @@ public class BuildingRepository extends AbstractJDBC<BuildingEntity> implements 
 		}
 		return result;
 	}
+
+	
 }

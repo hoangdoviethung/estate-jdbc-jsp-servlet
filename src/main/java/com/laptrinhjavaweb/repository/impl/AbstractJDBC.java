@@ -400,6 +400,7 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 
 	@Override
 	public <T> T findById(Long id) {
+		BuildingEntity buildingEntity = new BuildingEntity();
 		BuildingDTO buildingDTO = new BuildingDTO();
 		String tableName = "";
 		if (zClass.isAnnotationPresent(Table.class)) {
@@ -418,8 +419,8 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 
 			ResultSetMapper<BuildingEntity> rsm = new ResultSetMapper<>();
 			List<BuildingEntity> list = rsm.mapRow(rs, zClass);
-			BuildingConverter b = new BuildingConverter();
-			buildingDTO = b.converterToDTO(list.get(0));
+		
+			buildingEntity=list.get(0);
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -436,7 +437,7 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 				// TODO: handle exception
 			}
 		}
-		return (T) buildingDTO;
+		return (T) buildingEntity;
 	}
 
 	@Override
@@ -447,22 +448,21 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 		ResultSet resultSet = null;
 		StringBuilder sql = createSQLfindALL(properties);
 		if (where != null && where.length > 0) {
-			sql.append(where[0]) ; 
+			sql.append(where[0]);
 		}
-		
-		if(page!=null){
-			if(page.getSorter()!=null){
+
+		if (page != null) {
+			if (page.getSorter() != null) {
 				Sorter sorter = page.getSorter();
-				sql.append(" ORDER BY "+sorter.getSortName()+" "+sorter.getSortBy()+" ");
+				sql.append(" ORDER BY " + sorter.getSortName() + " " + sorter.getSortBy() + " ");
 			}
-			
-			if(page.getOffset()!=null && page.getLimit() !=null){
-				sql.append(" LIMIT "+page.getOffset()+", "+page.getLimit()+" ");
+
+			if (page.getOffset() != null && page.getLimit() != null) {
+				sql.append(" LIMIT " + page.getOffset() + ", " + page.getLimit() + " ");
 			}
-			
-			
+
 		}
-		
+
 		try {
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(sql.toString());
@@ -494,33 +494,34 @@ public class AbstractJDBC<T> implements GenericJDBC<T> {
 			Table table = zClass.getAnnotation(Table.class);
 			tableName = table.name();
 		}
-		
-		StringBuilder result = new StringBuilder("SELECT * FROM "+tableName+" A WHERE 1=1");
-		if(properties != null && properties.size()>0){
-			String [] params = new String[properties.size()];
-			Object [] values = new Object[properties.size()];
-			int i=0;
-			for(Map.Entry<?, ?> item : properties.entrySet()){
+
+		StringBuilder result = new StringBuilder("SELECT * FROM " + tableName + " A WHERE 1=1");
+		if (properties != null && properties.size() > 0) {
+			String[] params = new String[properties.size()];
+			Object[] values = new Object[properties.size()];
+			int i = 0;
+			for (Map.Entry<?, ?> item : properties.entrySet()) {
 				params[i] = (String) item.getKey();
 				values[i] = item.getValue();
 				i++;
 			}
-			// luu y 
-			for(int i1=0;i1 < params.length;i1++){
-				
-				if(values[i1] instanceof String){
-					result.append(" and LOWER("+params[i1]+" LIKE '%"+values[i1]+"%' )");
-				}else if (values[i1] instanceof Integer ){
-					if((Integer)values[i1] != 0){
-					result.append(" and "+params[i1]+" = "+values[i1]+" ");}
-				}else if (values[i1] instanceof Long){
-					result.append(" and "+params[i1]+" = "+values[i1]+" ");
+			// luu y
+			for (int i1 = 0; i1 < params.length; i1++) {
+
+				if (values[i1] instanceof String) {
+					result.append(" and LOWER(" + params[i1] + " LIKE '%" + values[i1] + "%' )");
+				} else if (values[i1] instanceof Integer) {
+					if ((Integer) values[i1] != 0) {
+						result.append(" and " + params[i1] + " = " + values[i1] + " ");
+					}
+				} else if (values[i1] instanceof Long) {
+					result.append(" and " + params[i1] + " = " + values[i1] + " ");
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		return result;
 	}
 

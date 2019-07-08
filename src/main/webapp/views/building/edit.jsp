@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<c:url var="builddingAPI" value="/api-admin-building" />
+<c:url var="buildingURL" value="/admin-building" />
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Chỉnh sửa thông tin sản phẩm</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 	<div class="main-content">
@@ -15,22 +16,33 @@
 				<ul class="breadcrumb">
 					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">Trang
 							chủ</a></li>
-
-					<li>Sản phẩm</li>
-					<li>Chỉnh sửa thông tin Sản phẩm</li>
+					<li><a href="#">Sản phẩm</a></li>
+					<li>Thêm sản phẩm</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>
 			<div class="page-content">
-
-				<div class="widget-body">
-					<div class="widget-main">
-						<div class="form-horizontal">
+				<div class="row">
+					<div class="col-xs-12">
+						<form class="form-horizontal" role="form" id="formEdit">
 							<div class="form-group ">
 								<label class="col-sm-3 "> Tên sản phẩm </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm" name="name"
+											value="${model.name}" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3">
+									<label><b>Hình ảnh cho sản phẩm</b></label>
+								</div>
+								<div class="col-sm-3">
+									<div class="fg-line">
+										<label class="block clearfix"> <input type="file"
+											name="file" class="btn btn-info">
+										</label>
 									</div>
 								</div>
 							</div>
@@ -41,16 +53,16 @@
 								</div>
 							</div>
 
-
 							<div class="form-group distance">
-								<label class="col-sm-3 control">Quận </label>
-								<div class="col-sm-2">
+								<label class="col-sm-12 control">Quận </label>
+								<div class="col-sm-12">
 									<div class="fg-line">
-										<select class="form-control" id="sel1">
-											<option>Quận Bình Thạch</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
+										<select class="custom-select" id="sel1" name="district">
+											<option value="">Chọn quận</option>
+											<c:forEach var="item" items="${districs}">
+												<option value="${item.key}"
+													${item.key == model.district ? 'selected' : ''}>${item.value}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
@@ -61,7 +73,8 @@
 								<label class="col-sm-3 "> Phường </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm" name="ward"
+											value="${model.ward}" />
 									</div>
 								</div>
 
@@ -71,48 +84,19 @@
 								<label class="col-sm-3 "> Đường </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm" name="street"
+											value="${model.street}" />
 									</div>
 								</div>
 
 							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Kết cấu </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-								<div class="col-sm-12"></div>
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Số tầng hầm </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Diện tích sàn </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
 
 							<div class="form-group distance">
 								<label class="col-sm-3 "> Hướng </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm"
+											name="direction" value="${model.direction}" />
 									</div>
 								</div>
 
@@ -123,10 +107,22 @@
 								<label class="col-sm-3 "> Hạng </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm" name="level"
+											value="${model.level}" />
 									</div>
 								</div>
 
+							</div>
+
+
+							<div class="form-group distance">
+								<label class="col-sm-3 "> Số tầng hầm </label>
+								<div class="col-sm-9">
+									<div class="fg-line">
+										<input type="text" class="form-control input-sm"
+											name="numberOfBasement" value="${model.numberOfBasement}" />
+									</div>
+								</div>
 							</div>
 
 
@@ -134,128 +130,28 @@
 								<label class="col-sm-3 "> Diện tích thuê </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm"
+											name="rentArea" value="${model.rentArea}" />
 									</div>
 								</div>
 
 							</div>
-
 							<div class="form-group distance">
-								<label class="col-sm-3 "> Mô tả diện tích </label>
+								<label class="col-sm-3 "> Diện tích sàn </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<textarea class="form-control input-sm" rows="5" id="comment"></textarea>
+										<input type="text" class="form-control input-sm"
+											name="buildingArea" value="${model.buildingArea}" />
 									</div>
 								</div>
 
 							</div>
-
 							<div class="form-group distance">
 								<label class="col-sm-3 "> Giá thuê </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Mô tả giá </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Phí dịch vụ </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Phí ô tô </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Phí mô tô </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Phí ngoài giờ </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Tiền điện </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Đặt cọc </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Thanh toán </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Thời gian thuê </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Thời gian trang trí</label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm"
+											name="costRent" value="${model.costRent}" />
 									</div>
 								</div>
 
@@ -265,7 +161,8 @@
 								<label class="col-sm-3 "> Tên quản lý </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm"
+											name="managerName" value="${model.managerName}" />
 									</div>
 								</div>
 
@@ -275,17 +172,8 @@
 								<label class="col-sm-3 "> SDT quản lý </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="form-group distance">
-								<label class="col-sm-3 "> Phí môi giới </label>
-								<div class="col-sm-9">
-									<div class="fg-line">
-										<input type="text" class="form-control input-sm" />
+										<input type="text" class="form-control input-sm"
+											name="managerPhone" value="${model.managerPhone}" />
 									</div>
 								</div>
 
@@ -297,20 +185,102 @@
 								<label class="col-sm-3 "> Loại tòa nhà </label>
 								<div class="col-sm-9">
 									<div class="fg-line">
-										<label class="checkbox-inline"><input type="checkbox"
-											value="">Option1</label> <label class="checkbox-inline"><input
-											type="checkbox" value="">Option2</label> <label
-											class="checkbox-inline"><input type="checkbox"
-											value="">Option3</label>
+										<c:forEach var="item" items="${buidingTypes}">
+											<label class="checkbox-inline"><input type="checkbox"
+												value="${item.key}" name="buildingTypes"
+												${fn:contains(fn:join(model.buildingTypes,',') ,item.key) ? 'checked' : ''}>${item.value}</label>
+										</c:forEach>
+
 									</div>
 								</div>
 							</div>
-							<div class="">
-								<button type="button" >Hủy Bỏ</button>
-								<button type="button" >Thêm sản phẩm</button>
-							</div>
+
+							<input type="hidden" name="id" value="${model.id}"
+								id="buildingId" />
+						</form>
+						<div class="form-group">
+							<c:if test="${empty model.id}">
+								<div class="col-sm-1 col-sm-offset-3">
+									<button class="btn btn-success" id="btnAddOrUpdateBuilding">Thêm
+										sản phẩm</button>
+								</div>
+							</c:if>
+							<c:if test="${not empty model.id}">
+								<div class="col-sm-1 col-sm-offset-3">
+									<button class="btn btn-success" id="btnAddOrUpdateBuilding">Cập
+										nhật sản phẩm</button>
+								</div>
+							</c:if>
 						</div>
+
 					</div>
-					<!-- /.main-content -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.main-content -->
+	<script type="text/javascript">
+		$("#btnAddOrUpdateBuilding").click(function() {
+			addOrUpdateBuilding();
+		});
+
+		function addOrUpdateBuilding() {
+			var buildingId = $('#buildingId').val();
+			var formData = $('#formEdit').serializeArray();
+			var data = {};
+			var buildingTypes = [];
+			$.each(formData, function(index, v) {
+				if (v.name == 'buildingTypes') {
+					buildingTypes.push(v.value);
+				} else {
+					data["" + v.name + ""] = v.value;
+				}
+			});
+			data['buildingTypes'] = buildingTypes;
+			if (buildingId == '') {
+				addBuilding(data);
+			} else {
+				editBuilding(data, buildingId);
+			}
+		}
+
+		function addBuilding(data, id) {
+			$
+					.ajax({
+						url : '${builddingAPI}',
+						data : JSON.stringify(data),
+						type : 'POST',
+						contentType : 'application/json',
+						dataType : 'json',
+
+						success : function(data) {
+							window.location.href = "${buildingURL}?action=EDIT&id="
+									+ data.id + "&message=insert_success";
+						},
+						error : function() {
+							window.location.href = "${buildingURL}?action=LIST&message=insert_success";
+						}
+					});
+		}
+		function editBuilding(data, id) {
+			$
+					.ajax({
+						url : '${builddingAPI}',
+						data : JSON.stringify(data),
+						type : 'PUT',
+						contentType : 'application/json',
+						success : function(data) {
+							window.location.href = "${buildingURL}?action=EDIT&id="
+									+ id + "&message=update_success";
+						},
+						error : function() {
+							window.location.href = "${buildingURL}?action=LIST&message=errorsystem";
+						}
+					});
+		}
+	</script>
 </body>
 </html>
+
+
+

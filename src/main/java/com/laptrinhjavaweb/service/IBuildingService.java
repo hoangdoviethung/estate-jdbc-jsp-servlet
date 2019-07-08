@@ -11,5 +11,5 @@ import com.laptrinhjavaweb.paging.Pageble;
 public interface IBuildingService {
 	BuildingDTO save(BuildingDTO newBuilding);
 	List<BuildingDTO> findAll(BuildingSearchBuilder builder, Pageble pageble );
-	
+	 BuildingDTO findById(long id);
 }

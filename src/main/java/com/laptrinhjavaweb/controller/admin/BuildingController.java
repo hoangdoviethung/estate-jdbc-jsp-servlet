@@ -15,6 +15,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.paging.PageRequest;
 import com.laptrinhjavaweb.paging.Pageble;
 import com.laptrinhjavaweb.service.IBuildingService;
+import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.utils.DataUtil;
 import com.laptrinhjavaweb.utils.FormUtil;
 
@@ -22,21 +23,10 @@ import com.laptrinhjavaweb.utils.FormUtil;
 public class BuildingController extends HttpServlet {
 	private static final long serialVersionUID = 2686801510247002166L;
 
-	@Inject
-	private  IBuildingService buildingService;
+	
+	private  IBuildingService buildingService = new BuildingService();
 
-	// public static IBuildingService getBuildingService() {
-	// if (buildingService == null) {
-	// buildingService = new BuildingService();
-	// }
-	// return buildingService;
-	// }
 
-//	public BuildingController() {
-//		if (buildingService == null) {
-//			buildingService = new BuildingService();
-//		}
-//	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,6 +40,9 @@ public class BuildingController extends HttpServlet {
 			Pageble pageble = new PageRequest(null, null, null);
 			model.setListResults( buildingService.findAll(builder, pageble));
 		} else if (action.equals("EDIT")) {
+			if(model.getId() != null){
+				model = buildingService.findById(model.getId());
+			}
 			url = "/views/building/edit.jsp";
 		}
 		request.setAttribute("districs", DataUtil.getDistrics());
@@ -64,8 +57,10 @@ public class BuildingController extends HttpServlet {
 				.setAreaRentTo(model.getAreaRentTo()).setName(model.getName()).setCostRentFrom(model.getCostRentFrom())
 				.setCostRentTo(model.getCostRentTo()).setNumberOfBasement(model.getNumberOfBasement())
 				.setStreet(model.getStreet())
+				.setBuildingArea(model.getBuildingArea())
 				.setWard(model.getWard())
 				.setBuildingTypes(model.getBuildingTypes())
+				.setDistrict(model.getDistrict())
 				.build();
 
 		return build;

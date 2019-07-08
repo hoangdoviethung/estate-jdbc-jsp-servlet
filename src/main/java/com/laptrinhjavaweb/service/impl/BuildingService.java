@@ -4,35 +4,29 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RentArea;
 import com.laptrinhjavaweb.paging.Pageble;
 import com.laptrinhjavaweb.repository.IBuildingRepository;
+import com.laptrinhjavaweb.repository.IRentAreaRepository;
 import com.laptrinhjavaweb.repository.impl.BuildingRepository;
+import com.laptrinhjavaweb.repository.impl.RentAreaRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 
 public class BuildingService implements IBuildingService {
 
-	private IBuildingRepository buildingRepository;
+	private IBuildingRepository buildingRepository = new BuildingRepository();
 
-	private BuildingConverter buildingConverter;
+	private BuildingConverter buildingConverter = new BuildingConverter();
 
-	private IBuildingRepository buildingRepository() {
-		if (buildingRepository == null) {
-			buildingRepository = new BuildingRepository();
-		}
-		return buildingRepository;
-	}
+	
+	private IRentAreaRepository rentAreaRepository = new RentAreaRepository();
 
-	private BuildingConverter buildingConverter() {
-		if (buildingConverter == null) {
-			buildingConverter = new BuildingConverter();
-		}
-		return buildingConverter;
-
-	}
 
 	@Override
 	public List<BuildingDTO> findAll(BuildingSearchBuilder builder, Pageble pageble) {
@@ -40,7 +34,6 @@ public class BuildingService implements IBuildingService {
 		buildingRepository = new BuildingRepository();
 		buildingConverter = new BuildingConverter();
 		List<BuildingEntity> buildingEntities = buildingRepository.findAll(builder, pageble);
-
 		for (BuildingEntity item : buildingEntities) {
 			result.add(buildingConverter.converterToDTO(item));
 		}
@@ -50,13 +43,28 @@ public class BuildingService implements IBuildingService {
 
 	@Override
 	public BuildingDTO save(BuildingDTO buildingDTO) {
-		buildingRepository = new BuildingRepository();
-		buildingConverter = new BuildingConverter();
-		BuildingEntity buildingEntity = buildingConverter().converterToEntity(buildingDTO);
+		
+		BuildingEntity buildingEntity = buildingConverter.converterToEntity(buildingDTO);
+		if(buildingDTO.getBuildingTypes().length>0){
+		buildingEntity.setType(StringUtils.join(buildingDTO.getBuildingTypes(), ","));
+		}
 		buildingEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		Long id = buildingRepository().insert(buildingEntity);
+		Long id = buildingRepository.insert(buildingEntity);
+		if(buildingDTO.getRentArea()!=null){
+		for(String item : buildingDTO.getRentArea().split(",")){
+			RentArea rentArea = new RentArea();
+			rentArea.setBuildingId(id);
+			rentArea.setValue(item);
+			rentAreaRepository.insert(rentArea);
+		}}
+		//save rentarea 
+		return buildingConverter.converterToDTO(buildingRepository.findById(id));
+	}
 
-		return null;
+	@Override
+	public BuildingDTO findById(long id) {
+		return buildingConverter.converterToDTO(buildingRepository.findById(id));
+		
 	}
 
 	// @Override
@@ -97,4 +105,5 @@ public class BuildingService implements IBuildingService {
 	// }
 	// return result;
 	// }
+	
 }

@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.converter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class BuildingConverter {
 		}
 		if (areas.size() > 0) {
 			result.setRentArea(StringUtils.join(areas, ","));
+		}
+		if(StringUtils.isNotBlank(buildingEntity.getType())){
+			 result.setBuildingTypes(buildingEntity.getType().split(","));
 		}
 		return result;
 	}

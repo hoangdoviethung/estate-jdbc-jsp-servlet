@@ -8,8 +8,12 @@ public class BuildingSearchBuilder {
 
 	private String street;
 	
-	private Integer numberOfBasement;
+	private String district;	
 	
+	private String numberOfBasement;
+	
+	
+	private String buildingArea;
 	private String costRentTo;
 
 	private String costRentFrom;
@@ -23,7 +27,9 @@ public class BuildingSearchBuilder {
 	public String getName() {
 		return name;
 	}
-
+	public String getBuildingArea() {
+		return buildingArea;
+	}
 	public String getWard() {
 		return ward;
 	}
@@ -33,7 +39,11 @@ public class BuildingSearchBuilder {
 	}
 
 	
-	public Integer getNumberOfBasement() {
+	public String getDistrict() {
+		return district;
+	}
+
+	public String getNumberOfBasement() {
 		return numberOfBasement;
 	}
 
@@ -67,19 +77,22 @@ public class BuildingSearchBuilder {
 		this.areaRentTo = builder.areaRentTo;
 		this.areaRentFrom = builder.areaRentFrom;
 		this.buildingTypes = builder.buildingTypes;
+		this.district = builder.district;
+		this.buildingArea = builder.buildingArea;
 	}
 
 	public static class Builder {
 		private String name;
 		private String ward;
 		private String street;
-		private Integer numberOfBasement;	
+		private String numberOfBasement;	
 		private String costRentTo;
 		private String costRentFrom;
 		private String areaRentTo;
 		private String areaRentFrom;
+		private String district;
 		private String[] buildingTypes = new String[] {};
-
+		private String buildingArea;
 		public Builder setName(String name) {
 			this.name = name;
 			return this;
@@ -87,6 +100,15 @@ public class BuildingSearchBuilder {
 
 		public Builder setWard(String ward) {
 			this.ward = ward;
+			return this;
+		}
+		public Builder setBuildingArea(String buildingArea) {
+			this.buildingArea = buildingArea;
+			return this;
+		}
+		
+		public Builder setDistrict(String district) {
+			this.district = district;
 			return this;
 		}
 
@@ -97,7 +119,7 @@ public class BuildingSearchBuilder {
 
 		
 		
-		public Builder setNumberOfBasement(Integer numberOfBasement) {
+		public Builder setNumberOfBasement(String numberOfBasement) {
 			this.numberOfBasement = numberOfBasement;
 			return this;
 		}

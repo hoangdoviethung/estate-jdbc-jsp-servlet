@@ -41,14 +41,14 @@
     <!-- Begin footer -->
     <%@ include file="/common/admin/footer.jsp" %>
     <!-- end footer -->
-
+	
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
-
+	
 </div>
 
-<script src="<c:url value='/template/admin/js/global_javascript.js' />"></script>
+ <script src="<c:url value='/template/admin/js/global_javascript.js' />"></script>  
 <script src="<c:url value='/template/admin/assets/js/ace-extra.min.js' />"></script>
 <script src="<c:url value='/template/admin/assets/js/jquery-ui.custom.min.js' />"></script>
 <script src="<c:url value='/template/admin/assets/js/jquery.ui.touch-punch.min.js' />"></script>
